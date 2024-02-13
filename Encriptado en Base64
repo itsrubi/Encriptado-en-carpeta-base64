@@ -1,0 +1,35 @@
+import os
+import base64
+import shutil
+
+# Función para encriptar el archivo en base64
+def encriptar_archivo(archivo):
+    with open(archivo, 'rb') as f:
+        contenido = f.read()
+        contenido_encriptado = base64.b64encode(contenido)
+
+    return contenido_encriptado
+
+# Carpeta de entrada con los archivos que deseas encriptar
+carpeta_entrada = 'ruta/carpeta/entrada'
+
+# Carpeta de salida donde se guardarán los archivos encriptados
+carpeta_salida = 'ruta/carpeta/salida'
+
+# Crea la carpeta de salida si no existe
+os.makedirs(carpeta_salida, exist_ok=True)
+
+# Lista todos los archivos en la carpeta de entrada
+archivos = os.listdir(carpeta_entrada)
+
+# Recorre los archivos y encripta cada uno
+for archivo in archivos:
+    ruta_archivo_entrada = os.path.join(carpeta_entrada, archivo)
+    ruta_archivo_salida = os.path.join(carpeta_salida, archivo + '.encriptado')
+
+    contenido_encriptado = encriptar_archivo(ruta_archivo_entrada)
+
+    with open(ruta_archivo_salida, 'wb') as f:
+        f.write(contenido_encriptado)
+
+print("Encriptado completado.")
